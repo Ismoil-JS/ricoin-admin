@@ -1,0 +1,36 @@
+$main-color-dark: #002E34;
+
+h1{
+    width: 100%;
+    text-align: center;
+    margin: 0;
+    padding: 20px 0;
+    background-color: #0e44d8;
+
+}
+
+.auth__nav{
+    background-color: #0ae2cc;
+    width: 100%;
+    padding: 20px 0;
+    padding-right: 12%;
+    display: flex;
+    justify-content: space-evenly;
+    margin: 0;
+
+    &:first-child{
+        list-style-type: none !important;
+    }
+
+    a{
+        text-decoration: none;
+        font-size: 18px;
+        font-weight: 500;
+        color: rgb(0, 0, 0);
+    }
+  
+    .auth__link__active{
+      color: #002E34;
+      border-bottom: 2px solid $main-color-dark;
+    }
+}
