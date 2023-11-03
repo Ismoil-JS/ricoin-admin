@@ -1,0 +1,26 @@
+$main-color-dark: #002E34;
+
+
+.product__nav{
+    background-color: #82ab9e;
+    width: 100%;
+    padding: 20px 0;
+    padding-right: 20%;
+    display: flex;
+    justify-content: space-evenly;
+    margin: 0;
+
+    &:first-child{
+        list-style-type: none !important;
+    }
+
+    a{
+        text-decoration: none;
+        color: rgb(255, 255, 255);
+    }
+  
+    .product__link__active{
+      color: #ffffff;
+      border-bottom: 2px solid #fff200;
+    }
+}

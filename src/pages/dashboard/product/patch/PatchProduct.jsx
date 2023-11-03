@@ -66,7 +66,7 @@ const PatchProduct = () => {
       { headers })
       .then(() => 
         {
-          alert("Order status changed!")
+          alert("Product status changed!")
           window.location.reload()
         }
       )

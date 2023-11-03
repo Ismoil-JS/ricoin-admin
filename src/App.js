@@ -9,6 +9,9 @@ import PendingOrders from "./pages/dashboard/orders/pending/PendingOrders";
 import FinishedOrders from "./pages/dashboard/orders/finished/FinishedOrders";
 import CreateProduct from "./pages/dashboard/product/create/CreateProduct";
 import PatchProduct from "./pages/dashboard/product/patch/PatchProduct";
+import CreateEvent from "./pages/dashboard/event/create/CreateEvent";
+import PatchEvent from "./pages/dashboard/event/patch/PatchEvent";
+import CreateEventQRCode from "./pages/dashboard/event/qr-code/CreateEventQRCode";
 
 
 function App() {
@@ -17,7 +20,11 @@ function App() {
       <Routes>
         <Route path="/" element={<Auth />} />
         <Route path="/dashboard" element={<Dashboard />}>
-          <Route path="/dashboard/event" element={<Event />}></ Route>
+          <Route path="/dashboard/event" element={<Event />}>
+            <Route path="/dashboard/event/create" element={<CreateEvent />}></ Route>
+            <Route path="/dashboard/event/change" element={<PatchEvent />}></ Route>
+            <Route path="/dashboard/event/qr-code" element={<CreateEventQRCode />}></ Route>
+          </ Route>
           <Route path="/dashboard/orders" element={<Orders />}>
             <Route path="/dashboard/orders/pending" element={<PendingOrders />}></ Route>  
             <Route path="/dashboard/orders/finished" element={<FinishedOrders />}></ Route>  
