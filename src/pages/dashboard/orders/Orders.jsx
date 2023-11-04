@@ -16,7 +16,6 @@ const Orders = () => {
     <div>
       <div>
       <ul className={c.auth__nav}>
-          <li></li>
           <li>
             <NavLink className={(navData) => (navData.isActive ? c.auth__link__active : null)} to="/dashboard/orders/pending">Pending</NavLink>
           </li>

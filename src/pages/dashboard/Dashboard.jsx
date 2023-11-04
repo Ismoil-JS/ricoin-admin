@@ -8,7 +8,6 @@ const Dashboard = () => {
         <h1>Dashboard</h1>
       <div>
         <ul className={c.auth__nav}>
-          <li></li>
           <li>
             <NavLink className={(navData) => (navData.isActive ? c.auth__link__active : null)} to="/dashboard/event">Event</NavLink>
           </li>

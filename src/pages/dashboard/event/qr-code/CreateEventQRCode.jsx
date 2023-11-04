@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import axios from 'axios';
 import { QRCode } from "react-qr-code"
+import html2canvas from 'html2canvas';
 import c from "./Event.module.scss"
 
 const CreateEventQRCode = () => {
@@ -39,6 +40,34 @@ const CreateEventQRCode = () => {
       .catch(err => console.log(err))
   }
 
+  const downloadQRCodeAsJPGStart = () => {
+    if (qrId) {
+      const qrCodeContainer = document.getElementById('qrCodeContainerStart'); // Specify the container's ID
+  
+      html2canvas(qrCodeContainer).then((canvas) => {
+        const imgData = canvas.toDataURL('image/jpeg');
+        const a = document.createElement('a');
+        a.href = imgData;
+        a.download = `qr_code_end_${qrId}.jpg`;
+        a.click();
+      });
+    }
+  };
+
+  const downloadQRCodeAsJPGEnd = () => {
+    if (qrId) {
+      const qrCodeContainer = document.getElementById('qrCodeContainerEnd'); // Specify the container's ID
+  
+      html2canvas(qrCodeContainer).then((canvas) => {
+        const imgData = canvas.toDataURL('image/jpeg');
+        const a = document.createElement('a');
+        a.href = imgData;
+        a.download = `qr_code_end_${qrId}.jpg`;
+        a.click();
+      });
+    }
+  };
+
   return <div className={c.all_orders}>
     <div className={c.order_content}>
       {events.length ? events.map((event) => {
@@ -50,25 +79,25 @@ const CreateEventQRCode = () => {
     }) : <p>No Events</p>}
     </div>
       <div className={c.qrCode}>
-        <div style={{ height: "auto", margin: "0 auto", maxWidth: 205, width: "100%"}}>
+        <div id="qrCodeContainerStart" style={{ height: "auto", margin: "0 auto", maxWidth: 225, width: "100%"}}>
           <h3>Enter</h3>
           <QRCode
             size={256}
-            style={{ height: "auto", maxWidth: "100%", width: "100%", border: "2px solid black", padding: "15px" }}
+            style={{ height: "auto", width: "90%" }}
             value={"start" + qrId}
-            viewBox={`0 0 256 256`}
+            viewBox={`0 0 206 206`}
           />
-          <button>Download</button>
+          <button onClick={downloadQRCodeAsJPGStart}>Download</button>
         </div>  
-        <div style={{ height: "auto", margin: "0 auto", maxWidth: 205, width: "100%" }}>
+        <div id="qrCodeContainerEnd" style={{ height: "auto", margin: "0 auto", maxWidth: 225, width: "100%"}}>
           <h3>End</h3>
           <QRCode
             size={256}
-            style={{ height: "auto", maxWidth: "100%", width: "100%", border: "2px solid black", padding: "15px" }}
+            style={{ height: "auto", width: "90%" }}
             value={"end" + qrId}
-            viewBox={`0 0 256 256`}
+            viewBox={`0 0 206 206`}
           />
-          <button>Download</button>
+          <button onClick={downloadQRCodeAsJPGEnd}>Download</button>
         </div> 
       </div>
   </div>;

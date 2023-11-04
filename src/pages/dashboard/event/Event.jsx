@@ -16,7 +16,6 @@ const Event = () => {
     <div>
       <div>
       <ul className={c.product__nav}>
-          <li></li>
           <li>
             <NavLink className={(navData) => (navData.isActive ? c.product__link__active : null)} to="/dashboard/event/create">Create</NavLink>
           </li>

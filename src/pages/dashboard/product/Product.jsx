@@ -16,7 +16,6 @@ const Product = () => {
     <div>
       <div>
       <ul className={c.product__nav}>
-          <li></li>
           <li>
             <NavLink className={(navData) => (navData.isActive ? c.product__link__active : null)} to="/dashboard/product/create">Create</NavLink>
           </li>
