@@ -1,5 +1,4 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import c from './Event.module.scss';
 
@@ -29,7 +28,17 @@ const CreateEvent = () => {
         reject(err);
       };
     });
-  }
+  };
+
+  const formatDate = (selectedDate) => {
+    const year = selectedDate.getFullYear();
+    const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
+    const day = String(selectedDate.getDate()).padStart(2, '0');
+    const hours = String(selectedDate.getHours()).padStart(2, '0');
+    const minutes = String(selectedDate.getMinutes()).padStart(2, '0');
+
+    return `${year}-${month}-${day} ${hours}:${minutes}`;
+  };
 
   function createProduct(e) {
     e.preventDefault();
@@ -40,22 +49,22 @@ const CreateEvent = () => {
       .post('http://localhost:9000/api/events', {
         name,
         coins,
-        date,
+        date: formatDate(new Date(date)),
         location,
         image,
       }, {
-        headers, // Include headers in the request
+        headers,
       })
-      .then((response) => 
-      {console.log(response)
-        if(response.status === 204) {
-        alert("Event created")
-        window.location.reload();
-      }}
-      )
+      .then((response) => {
+        console.log(response);
+        if (response.status === 204) {
+          alert("Event created");
+          window.location.reload();
+        }
+      })
       .catch((err) => {
-        if(err.response.status === 401) {
-          alert("You are not an admin")
+        if (err.response && err.response.status === 401) {
+          alert("You are not an admin");
           window.location.reload();
         }
       });
@@ -66,7 +75,7 @@ const CreateEvent = () => {
       <form onSubmit={createProduct} className={c.product__form}>
         <input required type="text" placeholder="Event Name..." onChange={(e) => setName(e.target.value)} />
         <input required type="number" placeholder="Event Coins..." onChange={(e) => setCoins(e.target.value)} />
-        <input required type="text" placeholder="Event Date..." onChange={(e) => setDate(e.target.value)} />
+        <input required type="datetime-local" onChange={(e) => setDate(e.target.value)} />
         <input required type="text" placeholder="Event Location..." onChange={(e) => setLocation(e.target.value)} />
         <input required type="file" placeholder="Event Image..." onChange={uploadImage} />
         <button type="submit">Add</button>
