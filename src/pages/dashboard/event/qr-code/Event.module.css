@@ -1,0 +1,113 @@
+.all_orders {
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+  border: 1px solid #002E34;
+  border-radius: 5px;
+  box-shadow: 0 0 10px #002E34;
+  background-color: #ffffff;
+  color: #002E34;
+  font-family: "Roboto", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 500;
+  text-align: center;
+  letter-spacing: 1px;
+  line-height: 1.5;
+  z-index: 1;
+}
+.all_orders .order_content {
+  display: flex;
+  flex-wrap: wrap;
+}
+.all_orders .single_order {
+  width: 45%;
+  min-width: 340px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #002E34;
+  border-radius: 5px;
+}
+.all_orders .single_order p {
+  margin: 5px 0;
+}
+.all_orders .single_order input {
+  width: 250px;
+  height: 30px;
+  margin-top: 10px;
+}
+.all_orders .single_order .order_status {
+  width: 140px;
+  height: 30px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  border: none;
+  background-color: #d0d703;
+  font-size: 20px;
+  font-weight: 700;
+}
+.all_orders .single_order button {
+  width: 110px;
+  height: 30px;
+  border-radius: 5px;
+  border: none;
+  background-color: #09b231;
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+.all_orders .single_order button:hover {
+  background-color: #ffffff;
+  color: #002E34;
+  border: 1px solid #002E34;
+}
+.all_orders .single_order button:active {
+  background-color: #002E34;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+}
+.all_orders .qrCode {
+  width: 90%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+@media only screen and (max-width: 905px) {
+  .all_orders {
+    width: 95%;
+  }
+}
+@media only screen and (max-width: 766px) {
+  .all_orders .single_order {
+    width: 95%;
+    min-width: 320px;
+    margin: 5px;
+    padding: 5px;
+  }
+}
+@media only screen and (max-width: 375px) {
+  .all_orders .single_order {
+    font-size: 16px;
+    min-width: 280px;
+  }
+  .all_orders .single_order .order_status {
+    width: 120px;
+    height: 25px;
+    font-size: 16px;
+  }
+  .all_orders .single_order button {
+    width: 90px;
+    height: 25px;
+    font-size: 16px;
+  }
+}/*# sourceMappingURL=Event.module.css.map */
