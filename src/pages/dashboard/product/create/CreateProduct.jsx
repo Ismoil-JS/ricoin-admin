@@ -35,7 +35,7 @@ const CreateProduct = () => {
     const headers = { Authorization: localStorage.getItem('token') };
 
     axios
-      .post('http://localhost:9000/api/products', {
+      .post('https://api.ricoin.uz/api/products', {
         name,
         price,
         image,

@@ -21,7 +21,7 @@ const User = () => {
     };
 
     axios
-      .post('http://localhost:9000/api/users/admin', {
+      .post('https://api.ricoin.uz/api/users/admin', {
         name: name,
         surname: surname,
         email: userEmail,

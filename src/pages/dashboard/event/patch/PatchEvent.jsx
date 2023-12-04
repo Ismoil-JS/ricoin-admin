@@ -45,7 +45,7 @@ const PatchEvent = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:9000/api/events', { headers })
+      .get('https://api.ricoin.uz/api/events', { headers })
       .then((response) => {
         console.log(response.data);
         setEvents(response.data);
@@ -59,7 +59,7 @@ const PatchEvent = () => {
   function changeStatus(e){
     e.preventDefault();
     axios
-      .patch(`http://localhost:9000/api/events/${eventId}`, 
+      .patch(`https://api.ricoin.uz/api/events/${eventId}`, 
       {
         name,
         coins,

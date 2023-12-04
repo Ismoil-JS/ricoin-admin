@@ -21,7 +21,7 @@ const CreateEventQRCode = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:9000/api/events', { headers })
+      .get('https://api.ricoin.uz/api/events', { headers })
       .then((response) => {
         setEvents(response.data);
       })
@@ -34,7 +34,7 @@ const CreateEventQRCode = () => {
   function generateQR(e){
     e.preventDefault();
     axios
-      .get(`http://localhost:9000/api/events/${eventId}`, 
+      .get(`https://api.ricoin.uz/api/events/${eventId}`, 
       { headers })
       .then((response) => setQrId(response.data[0].id))
       .catch(err => console.log(err))

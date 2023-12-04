@@ -5,30 +5,10 @@ import c from './Event.module.scss';
 const CreateEvent = () => {
   const [name, setName] = useState('');
   const [date, setDate] = useState('');
-  const [image, setImage] = useState('');
   const [coins, setCoins] = useState('');
   const [location, setLocation] = useState('');
 
-  const uploadImage = async (e) => {
-    const files = e.target.files[0];
-    const base64 = await convertBase64(files);
-    setImage(base64);
-  };
-
-  const convertBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-
-      fileReader.onload = () => {
-        resolve(fileReader.result);
-      };
-
-      fileReader.onerror = (err) => {
-        reject(err);
-      };
-    });
-  };
+  
 
   const formatDate = (selectedDate) => {
     const year = selectedDate.getFullYear();
@@ -46,12 +26,11 @@ const CreateEvent = () => {
     const headers = { Authorization: localStorage.getItem('token') };
 
     axios
-      .post('http://localhost:9000/api/events', {
+      .post('http://api.ricoin.uz/api/events', {
         name,
         coins,
         date: formatDate(new Date(date)),
-        location,
-        image,
+        location
       }, {
         headers,
       })
@@ -63,9 +42,10 @@ const CreateEvent = () => {
         }
       })
       .catch((err) => {
+        console.log(err);
         if (err.response && err.response.status === 401) {
           alert("You are not an admin");
-          window.location.reload();
+          // window.location.reload();
         }
       });
   }
@@ -77,7 +57,6 @@ const CreateEvent = () => {
         <input required type="number" placeholder="Event Coins..." onChange={(e) => setCoins(e.target.value)} />
         <input required type="datetime-local" onChange={(e) => setDate(e.target.value)} />
         <input required type="text" placeholder="Event Location..." onChange={(e) => setLocation(e.target.value)} />
-        <input required type="file" placeholder="Event Image..." onChange={uploadImage} />
         <button type="submit">Add</button>
       </form>
     </div>

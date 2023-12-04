@@ -21,7 +21,7 @@ const PendingOrders = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:9000/api/exchanges/pending', { headers })
+      .get('https://api.ricoin.uz/api/exchanges/pending', { headers })
       .then((response) => {
         console.log(response.data);
         setOrders(response.data);
@@ -35,7 +35,7 @@ const PendingOrders = () => {
   function changeStatus(e){
     e.preventDefault();
     axios
-      .patch(`http://localhost:9000/api/exchanges/${orderId}`, 
+      .patch(`https://api.ricoin.uz/api/exchanges/${orderId}`, 
       {
         explanation
       },

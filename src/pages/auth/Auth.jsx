@@ -13,7 +13,7 @@ const Auth = () => {
 
   function loginUser(e){
     e.preventDefault();
-    axios.post("http://localhost:9000/api/users/sign-in", {
+    axios.post("https://api.ricoin.uz/api/users/sign-in", {
       email: userEmail,
       password:userPassword
     })

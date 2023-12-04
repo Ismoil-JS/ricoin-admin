@@ -43,7 +43,7 @@ const PatchProduct = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:9000/api/products', { headers })
+      .get('https://api.ricoin.uz/api/products', { headers })
       .then((response) => {
         console.log(response.data);
         setProducts(response.data);
@@ -57,7 +57,7 @@ const PatchProduct = () => {
   function changeStatus(e){
     e.preventDefault();
     axios
-      .patch(`http://localhost:9000/api/products/${productId}`, 
+      .patch(`https://api.ricoin.uz/api/products/${productId}`, 
       {
         name,
         price,

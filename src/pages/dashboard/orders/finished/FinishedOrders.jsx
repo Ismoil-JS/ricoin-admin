@@ -17,7 +17,7 @@ const FinishedOrders = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:9000/api/exchanges/finished', { headers })
+      .get('https://api.ricoin.uz/api/exchanges/finished', { headers })
       .then((response) => {
         console.log(response.data);
         setOrders(response.data);
