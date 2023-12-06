@@ -12,13 +12,8 @@ const User = () => {
   function loginUser(e) {
     e.preventDefault();
 
-    // Retrieve the token from local storage
-    const token = localStorage.getItem('token');
-
     // Define the headers with the Authorization header containing the token
-    const headers = {
-      Authorization: `${token}`,
-    };
+    const headers = { 'x-auth-token': localStorage.getItem('token') };
 
     axios
       .post('https://api.ricoin.uz/api/users/admin', {
@@ -30,7 +25,9 @@ const User = () => {
         headers, // Include headers in the request
       })
       .then((response) => 
-      {if(response.status === 201) {
+      {
+      console.log(response);
+        if(response.status === 201) {
         alert("User created")
       }}
       )
@@ -40,6 +37,9 @@ const User = () => {
         } 
         else if(err.response.status === 409) {
           alert("User already exists with this email!")
+        }
+        else {
+          alert("Something went wrong!")
         }
       });
   }
@@ -51,7 +51,7 @@ const User = () => {
         <input required type="text" placeholder="Your Surname..." onChange={(e) => setSurname(e.target.value)} />
         <input required type="email" placeholder="Your Email..." onChange={(e) => setUserEmail(e.target.value)} />
         <input required type="password" placeholder="Your Password..." onChange={(e) => setUserPassword(e.target.value)} />
-        <button type="submit">Register</button>
+        <button type="submit">Create</button>
       </form>
     </div>
   );

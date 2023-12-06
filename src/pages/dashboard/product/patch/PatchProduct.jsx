@@ -1,24 +1,22 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { FiCheck } from 'react-icons/fi';
-import c from "./Product.module.scss"
+import c from "./Product.module.scss";
 
 const PatchProduct = () => {
-  const [products, setProducts] = useState([]); // [1]
-  const [productId, setProductId] = useState([]); // [1]
-  const [name, setName] = useState(); // [1]
-  const [price, setPrice] = useState(); // [1]
-  const [image, setImage] = useState(); // [1]
+  const [products, setProducts] = useState([]);
+  const [name, setName] = useState('');
+  const [price, setPrice] = useState('');
+  const [image, setImage] = useState('');
+  const [describtion, setDescribtion] = useState('');
 
-  // Retrieve the token from local storage
-  const token = localStorage.getItem('token');
+  const headers = { 'x-auth-token': localStorage.getItem('token') };
 
-  // Define the headers with the Authorization header containing the token using useMemo
-  const headers = useMemo(() => {
-    return {
-      Authorization: token, // Correctly formatted Authorization header
-    };
-  }, [token]);
+  axios
+    .get('https://api.ricoin.uz/api/products', { headers })
+    .then((response) => {
+        setProducts(response.data);
+    });
 
   const uploadImage = async (e) => {
     const files = e.target.files[0];
@@ -39,54 +37,52 @@ const PatchProduct = () => {
         reject(err);
       };
     });
-  }
+  };
 
-  useEffect(() => {
-    axios
-      .get('https://api.ricoin.uz/api/products', { headers })
-      .then((response) => {
-        console.log(response.data);
-        setProducts(response.data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, [headers]);
-
-
-  function changeStatus(e){
+  const changeStatus = (e, productId) => {
     e.preventDefault();
+
     axios
-      .patch(`https://api.ricoin.uz/api/products/${productId}`, 
-      {
-        name,
-        price,
-        image
-      },
-      { headers })
-      .then(() => 
+      .patch(`https://api.ricoin.uz/api/products/${productId}`,
         {
-          alert("Product status changed!")
-          window.location.reload()
-        }
+          name,
+          price,
+          describtion,
+          image
+        },
+        { headers }
       )
-    .catch(err => console.log(err))
-  }
+      .then((response) => {
+        if (response && response.status === 200) {
+          alert("Product status changed!");
+          window.location.reload();
+        } else {
+          console.error('Unexpected response status:', response.status);
+        }
+      })
+      .catch((error) => {
+        console.error('Error updating product:', error);
+      });
+  };
 
-  return <div className={c.all_orders}>
-    {products.length ? products.map((product) => {
-      return  <form onSubmit={changeStatus} className={c.single_order} key={product.id}>
-                <img src={product.image} alt="" style={{ width: "200px" }} />
-                <p><b>Name:</b> {product.name}</p>
-                <p><b>Price:</b> {product.price} coins</p>
-                <i>You can change the properties here...</i>
-                <input  type="text" placeholder="Product Name..." onChange={(e) => setName(e.target.value)} />
-                <input  type="number" placeholder="Product Price..." onChange={(e) => setPrice(e.target.value)} />
-                <input  type="file" placeholder="Product Image..." onChange={uploadImage} />
-                <button onClick={(e) => setProductId(product.id)}><FiCheck /> Done</button>
-              </form>;
-    }) : <p>No orders</p>}
-  </div>;
-}
+  return (
+    <div className={c.all_orders}>
+      {products.length ? products.map((product) => (
+        <form onSubmit={(e) => changeStatus(e, product.id)} className={c.single_order} key={product.id}>
+          <img src={product.image} alt="" style={{ width: "200px", aspectRatio: "2/1" }} />
+          <p><b>Name:</b> {product.name}</p>
+          <p><b>Price:</b> {product.price} coins</p>
+          <p><b>Describtion:</b> {product.description}</p>
+          <i>You can change the properties here...</i>
+          <input type="text" placeholder="Product Name..." onChange={(e) => setName(e.target.value)} />
+          <input type="number" placeholder="Product Price..." onChange={(e) => setPrice(e.target.value)} />
+          <input type="text" placeholder="Product Description..." onChange={(e) => setDescribtion(e.target.value)} />
+          <input type="file" placeholder="Product Image..." onChange={uploadImage} />
+          <button type="submit"><FiCheck /> Done</button>
+        </form>
+      )) : <p>No orders</p>}
+    </div>
+  );
+};
 
-export default PatchProduct
+export default PatchProduct;

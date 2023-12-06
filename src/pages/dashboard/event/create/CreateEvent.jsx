@@ -20,14 +20,14 @@ const CreateEvent = () => {
     return `${year}-${month}-${day} ${hours}:${minutes}`;
   };
 
-  function createProduct(e) {
+  function createProduct(e) { 
     e.preventDefault();
 
-    const headers = { Authorization: localStorage.getItem('token') };
+    const headers = { 'x-auth-token': localStorage.getItem('token') };
 
     axios
-      .post('http://api.ricoin.uz/api/events', {
-        name,
+      .post('https://api.ricoin.uz/api/events', {
+        name, 
         coins,
         date: formatDate(new Date(date)),
         location
@@ -45,10 +45,12 @@ const CreateEvent = () => {
         console.log(err);
         if (err.response && err.response.status === 401) {
           alert("You are not an admin");
-          // window.location.reload();
+        } else {
+          alert("An error occurred. Please try again later.");
         }
       });
   }
+
 
   return (
     <div>

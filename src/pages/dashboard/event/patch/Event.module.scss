@@ -24,6 +24,7 @@
     .single_order {
         width: 45%;
         min-width: 340px;
+        min-height: 465px;
         display: flex; 
         flex-direction: column;
         justify-content: space-between;
@@ -62,6 +63,7 @@
           background-color: #09b231;
           font-size: 20px;
           font-weight: 700;
+          margin-top: 10px;
           cursor: pointer;
           transition: all 0.3s ease-in-out;
       
