@@ -9,27 +9,6 @@ const CreateProduct = () => {
   const [description, setDescription] = useState('');
   const [image, setImage] = useState('');
 
-  const uploadImage = async (e) => {
-    const files = e.target.files[0];
-    const base64 = await convertBase64(files);
-    setImage(base64);
-  };
-
-  const convertBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-
-      fileReader.onload = () => {
-        resolve(fileReader.result);
-      };
-
-      fileReader.onerror = (err) => {
-        reject(err);
-      };
-    });
-  }
-
   function createProduct(e) {
     e.preventDefault();
 
@@ -66,7 +45,7 @@ const CreateProduct = () => {
         <input required type="text" placeholder="Product Name..." onChange={(e) => setName(e.target.value)} />
         <input required type="number" placeholder="Product Price..." onChange={(e) => setPrice(e.target.value)} />
         <input required type="text" placeholder="Product Description..." onChange={(e) => setDescription(e.target.value)} />
-        <input required type="file" placeholder="Product Image..." onChange={uploadImage} />
+        <input required type="text" placeholder="Product Image..."  onChange={(e) => setImage(e.target.value)} />
         <button type="submit">Add</button>
       </form>
     </div>

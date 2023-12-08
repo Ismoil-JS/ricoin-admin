@@ -39,7 +39,7 @@ const PatchEvent = () => {
 
   function changeStatus(e){
     e.preventDefault();
-
+    
     axios
     .patch(
       `https://api.ricoin.uz/api/events/${eventId}`,

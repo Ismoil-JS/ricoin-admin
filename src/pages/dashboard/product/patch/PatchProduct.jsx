@@ -16,28 +16,9 @@ const PatchProduct = () => {
     .get('https://api.ricoin.uz/api/products', { headers })
     .then((response) => {
         setProducts(response.data);
+    }).catch((err) => {
+      console.log(err);
     });
-
-  const uploadImage = async (e) => {
-    const files = e.target.files[0];
-    const base64 = await convertBase64(files);
-    setImage(base64);
-  };
-
-  const convertBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-
-      fileReader.onload = () => {
-        resolve(fileReader.result);
-      };
-
-      fileReader.onerror = (err) => {
-        reject(err);
-      };
-    });
-  };
 
   const changeStatus = (e, productId) => {
     e.preventDefault();
@@ -55,7 +36,6 @@ const PatchProduct = () => {
       .then((response) => {
         if (response && response.status === 200) {
           alert("Product status changed!");
-          window.location.reload();
         } else {
           console.error('Unexpected response status:', response.status);
         }
@@ -77,7 +57,7 @@ const PatchProduct = () => {
           <input type="text" placeholder="Product Name..." onChange={(e) => setName(e.target.value)} />
           <input type="number" placeholder="Product Price..." onChange={(e) => setPrice(e.target.value)} />
           <input type="text" placeholder="Product Description..." onChange={(e) => setDescribtion(e.target.value)} />
-          <input type="file" placeholder="Product Image..." onChange={uploadImage} />
+          <input type="text" placeholder="Product Image..." onChange={(e) => setImage(e.target.value)} />
           <button type="submit"><FiCheck /> Done</button>
         </form>
       )) : <p>No orders</p>}
