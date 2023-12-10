@@ -28,7 +28,7 @@ const PatchProduct = () => {
         {
           name,
           price,
-          describtion,
+          description: describtion,
           image
         },
         { headers }
@@ -36,8 +36,12 @@ const PatchProduct = () => {
       .then((response) => {
         if (response && response.status === 200) {
           alert("Product status changed!");
+          setName('');
+          setPrice('');
+          setDescribtion('');
+          setImage('');
         } else {
-          console.error('Unexpected response status:', response.status);
+          alert("An error occurred. Please try again later.");
         }
       })
       .catch((error) => {
