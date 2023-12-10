@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { FiCheck } from 'react-icons/fi';
 import c from "./Product.module.scss";
+import useCloudinaryUpload from '../../../../components/UploadWidget.js'; // Adjust the path accordingly
+
+
 
 const PatchProduct = () => {
   const [products, setProducts] = useState([]);
@@ -9,6 +12,11 @@ const PatchProduct = () => {
   const [price, setPrice] = useState('');
   const [image, setImage] = useState('');
   const [describtion, setDescribtion] = useState('');
+
+  const { openWidget } = useCloudinaryUpload((imageUrl) => {
+    // Handle the imageUrl, for example, set it in the state
+    setImage(imageUrl);
+  });
 
   const headers = { 'x-auth-token': localStorage.getItem('token') };
 
@@ -58,8 +66,9 @@ const PatchProduct = () => {
           <input type="text" placeholder="Product Name..." onChange={(e) => setName(e.target.value)} />
           <input type="number" placeholder="Product Price..." onChange={(e) => setPrice(e.target.value)} />
           <input type="text" placeholder="Product Description..." onChange={(e) => setDescribtion(e.target.value)} />
-          <input type="text" placeholder="Product Image..." onChange={(e) => setImage(e.target.value)} />
-          <button type="submit"><FiCheck /> Done</button>
+          <input hidden type="text" placeholder="Product Image..." value={image} readOnly />
+          <button className={c.imageUpload} type="button" onClick={openWidget}>Select Image</button>
+          <button className={c.okButton} type="submit"><FiCheck /> Done</button>
         </form>
       )) : <p>No orders</p>}
     </div>
