@@ -35,11 +35,11 @@ const PatchProduct = () => {
       )
       .then((response) => {
         if (response && response.status === 200) {
-          alert("Product status changed!");
           setName('');
           setPrice('');
           setDescribtion('');
           setImage('');
+          alert("Product status changed!");
         } else {
           alert("An error occurred. Please try again later.");
         }

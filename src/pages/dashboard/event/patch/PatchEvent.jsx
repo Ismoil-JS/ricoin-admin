@@ -11,6 +11,17 @@ const PatchEvent = () => {
   const [coins, setCoins] = useState('');
   const [location, setLocation] = useState('');
 
+
+  const formatDate = (selectedDate) => {
+    const year = selectedDate.getFullYear();
+    const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
+    const day = String(selectedDate.getDate()).padStart(2, '0');
+    const hours = String(selectedDate.getHours()).padStart(2, '0');
+    const minutes = String(selectedDate.getMinutes()).padStart(2, '0');
+
+    return `${year}-${month}-${day} ${hours}:${minutes}`;
+  };
+
   // Define the headers with the Authorization header containing the token using useMemo
   const headers = useMemo(() => {
     return { 'x-auth-token': localStorage.getItem('token') };
@@ -39,14 +50,14 @@ const PatchEvent = () => {
 
   function changeStatus(e){
     e.preventDefault();
-    
+
     axios
     .patch(
       `https://api.ricoin.uz/api/events/${eventId}`,
       {
         name,
         coins,
-        date,
+        date: formatDate(new Date(date)),
         location,
       },
       { headers }
@@ -55,7 +66,7 @@ const PatchEvent = () => {
       alert('Event status changed!');
       window.location.reload();
     })
-    .catch((err) => {
+    .catch(() => {
       alert('An error occurred. Please try again later.');
     });
   }
@@ -70,7 +81,7 @@ const PatchEvent = () => {
                 <i><b>You can change the properties here...</b></i>
                 <input  type="text" placeholder="Event Name..." onChange={(e) => setName(e.target.value)} />
                 <input  type="number" placeholder="Event Coins..." onChange={(e) => setCoins(e.target.value)} />
-                <input  type="text" placeholder="Event Date..." onChange={(e) => setDate(e.target.value)} />
+                <input  type="datetime-local" onChange={(e) => setDate(e.target.value)} />
                 <input  type="text" placeholder="Event Location..." onChange={(e) => setLocation(e.target.value)} />
                 <button onClick={() => setEventId(event.id)}><FiCheck /> Done</button>
               </form>;
