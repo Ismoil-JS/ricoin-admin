@@ -8,6 +8,7 @@ const CreateProduct = () => {
   const [price, setPrice] = useState('');
   const [description, setDescription] = useState('');
   const [image, setImage] = useState('');
+  const [amount, setAmount] = useState(1);
 
   const { openWidget } = useCloudinaryUpload((imageUrl) => {
     // Handle the imageUrl, for example, set it in the state
@@ -25,6 +26,7 @@ const CreateProduct = () => {
         price,
         description,
         image,
+        amount,
       }, {
         headers, // Include headers in the request
       })
@@ -35,7 +37,6 @@ const CreateProduct = () => {
         }
       })
       .catch((err) => {
-        console.log(err);
         if (err.response.status === 401) {
           alert("You are not an admin");
           window.location.reload();
@@ -48,6 +49,7 @@ const CreateProduct = () => {
       <form onSubmit={createProduct} className={c.product__form}>
         <input required type="text" placeholder="Product Name..." onChange={(e) => setName(e.target.value)} />
         <input required type="number" placeholder="Product Price..." onChange={(e) => setPrice(e.target.value)} />
+        <input type="number" placeholder="Product Amount..." onChange={(e) => setAmount(e.target.value)} />
         <input required type="text" placeholder="Product Description..." onChange={(e) => setDescription(e.target.value)} />
         <input hidden type="text" placeholder="Product Image..." value={image} readOnly />
         <button type="button" onClick={openWidget}>Select Image</button>

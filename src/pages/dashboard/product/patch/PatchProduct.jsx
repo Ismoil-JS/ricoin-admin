@@ -11,6 +11,7 @@ const PatchProduct = () => {
   const [image, setImage] = useState('');
   const [description, setDescription] = useState('');
   const [productId, setProductId] = useState(null);
+  const [amount, setAmount] = useState(1);
 
   const { openWidget } = useCloudinaryUpload((imageUrl) => {
     setImage(imageUrl);
@@ -42,6 +43,7 @@ const PatchProduct = () => {
           price,
           description,
           image,
+          amount,
         },
         { headers }
       )
@@ -52,10 +54,18 @@ const PatchProduct = () => {
           setProducts((prevProducts) =>
             prevProducts.map((product) =>
               product.id === productId
-                ? { ...product, name, price, description, image }
+                ? {
+                    ...product,
+                    name: name ? name : product.name,
+                    price: price ? price : product.price,
+                    description: description ? description : product.description,
+                    image: image ? image : product.image,
+                    amount: amount ? amount : product.amount,
+                  }
                 : product
             )
           );
+          
         } else {
           alert('An error occurred. Please try again later.');
         }
@@ -87,7 +97,7 @@ const PatchProduct = () => {
             <div className={c.delete_btn} onClick={() => deleteProduct(product.id)}>
               <FiTrash2 />
             </div>
-            <img src={product.image} alt="" style={{ height: '80px' }} />
+            <img src={product.image} alt="" style={{ height: '100px', maxWidth: '200px' }} />
             <p>
               <b>Name:</b> {product.name}
             </p>
@@ -95,11 +105,15 @@ const PatchProduct = () => {
               <b>Price:</b> {product.price} coins
             </p>
             <p>
+              <b>Amount:</b> {product.amount}
+            </p>
+            <p>
               <b>Description:</b> {product.description}
             </p>
             <i>You can change the properties here...</i>
             <input type="text" placeholder="Product Name..." onChange={(e) => setName(e.target.value)} />
             <input type="number" placeholder="Product Price..." onChange={(e) => setPrice(e.target.value)} />
+            <input type="number" placeholder="Product Amount..." onChange={(e) => setAmount(e.target.value ? e.target.value : product.amount)} />
             <input type="text" placeholder="Product Description..." onChange={(e) => setDescription(e.target.value)} />
             <input hidden type="text" placeholder="Product Image..." value={image} readOnly />
             <button className={c.imageUpload} type="button" onClick={openWidget}>
