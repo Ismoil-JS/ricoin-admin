@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
-import { FiCheck, FiTrash2 } from 'react-icons/fi';
+import { FiCheck, FiEdit3, FiTrash2 } from 'react-icons/fi';
 import c from './Product.module.scss';
 import useCloudinaryUpload from '../../../../components/UploadWidget.js';
 
@@ -10,8 +10,8 @@ const PatchProduct = () => {
   const [price, setPrice] = useState('');
   const [image, setImage] = useState('');
   const [description, setDescription] = useState('');
-  const [productId, setProductId] = useState(null);
   const [amount, setAmount] = useState(1);
+  const [editProductId, setEditProductId] = useState(null); // Track the currently edited product ID
 
   const { openWidget } = useCloudinaryUpload((imageUrl) => {
     setImage(imageUrl);
@@ -27,12 +27,11 @@ const PatchProduct = () => {
       .then((response) => {
         setProducts(response.data);
       })
-      .catch((error) => {
-        console.error('Error fetching products:', error.message);
+      .catch(() => {
       });
   }, [headers]);
 
-  const changeStatus = (e) => {
+  const changeStatus = (e, productId) => {
     e.preventDefault();
 
     axios
@@ -50,7 +49,6 @@ const PatchProduct = () => {
       .then((response) => {
         if (response && response.status === 204) {
           alert('Product status changed!');
-          // Update local state instead of reloading the entire page
           setProducts((prevProducts) =>
             prevProducts.map((product) =>
               product.id === productId
@@ -65,63 +63,84 @@ const PatchProduct = () => {
                 : product
             )
           );
-          
         } else {
           alert('An error occurred. Please try again later.');
         }
       })
       .catch(() => {
         alert('An error occurred. Please try again later.');
+      })
+      .finally(() => {
+        setEditProductId(null); // Reset the currently edited product ID
       });
   };
 
   function deleteProduct(id) {
-    console.log(id);
     axios
       .delete(`https://api.ricoin.uz/api/products/${id}`, { headers })
-      .then((e) => {
-        console.log(e.response);
+      .then(() => {
         alert('Product has been deleted!');
         setProducts((prevProducts) => prevProducts.filter((product) => product.id !== id));
       })
       .catch(() => {
         alert('An error occurred on delete.');
       });
-  };
+  }
 
   return (
     <div className={c.all_orders}>
       {products.length ? (
         products.map((product) => (
-          <form onSubmit={changeStatus} className={c.single_order} key={product.id}>
+          <form onSubmit={(e) => changeStatus(e, product.id)} className={c.single_order} key={product.id}>
             <div className={c.delete_btn} onClick={() => deleteProduct(product.id)}>
               <FiTrash2 />
             </div>
             <img src={product.image} alt="" style={{ height: '100px', maxWidth: '200px' }} />
             <p>
-              <b>Name:</b> {product.name}
+              <b>Name:</b>{' '}
+              {editProductId === product.id ? (
+                <input type="text" placeholder={product.name} value={name} onChange={(e) => setName(e.target.value)} />
+              ) : (
+                <span>{product.name}</span>
+              )}
             </p>
             <p>
-              <b>Price:</b> {product.price} coins
+              <b>Price:</b>{' '}
+              {editProductId === product.id ? (
+                <input type="number" placeholder="Product Price..." value={price} onChange={(e) => setPrice(e.target.value)} />
+              ) : (
+                <span>{product.price + ' coins'}</span>
+              )}
             </p>
             <p>
-              <b>Amount:</b> {product.amount}
+              <b>Amount:</b>{' '}
+              {editProductId === product.id ? (
+                <input type="number" placeholder={product.amount} value={amount} onChange={(e) => setAmount(e.target.value)} />
+              ) : (
+                <span>{product.amount}</span>
+              )}
             </p>
             <p>
-              <b>Description:</b> {product.description}
+              <b>Description:</b>{' '}
+              {editProductId === product.id ? (
+                <input type="text" placeholder={product.description} value={description} onChange={(e) => setDescription(e.target.value)} />
+              ) : (
+                <span>{product.description}</span>
+              )}
             </p>
-            <i>You can change the properties here...</i>
-            <input type="text" placeholder="Product Name..." onChange={(e) => setName(e.target.value)} />
-            <input type="number" placeholder="Product Price..." onChange={(e) => setPrice(e.target.value)} />
-            <input type="number" placeholder="Product Amount..." onChange={(e) => setAmount(e.target.value ? e.target.value : product.amount)} />
-            <input type="text" placeholder="Product Description..." onChange={(e) => setDescription(e.target.value)} />
             <input hidden type="text" placeholder="Product Image..." value={image} readOnly />
             <button className={c.imageUpload} type="button" onClick={openWidget}>
               Select Image
             </button>
-            <button className={c.okButton} onClick={() => setProductId(product.id)}>
-              <FiCheck /> Done
-            </button>
+            {editProductId === product.id ? (
+              <button className={c.okButton} type="submit">
+                <FiCheck />
+              </button>
+            ) : ( <></>
+            )}
+              <div className={c.edit_btn} onClick={() => setEditProductId(product.id)}>
+                <FiEdit3 />
+              </div>
           </form>
         ))
       ) : (

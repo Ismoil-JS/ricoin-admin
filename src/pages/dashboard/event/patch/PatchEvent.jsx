@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
-import { FiCheck, FiTrash2 } from 'react-icons/fi';
+import { FiCheck, FiEdit3, FiTrash2 } from 'react-icons/fi';
 import c from "./Event.module.scss"
 
 const PatchEvent = () => {
   const [events, setEvents] = useState([]);
-  const [eventId, setEventId] = useState(null);
   const [name, setName] = useState('');
   const [date, setDate] = useState('');
   const [coins, setCoins] = useState('');
   const [location, setLocation] = useState('');
   const [singleEv, setSingleEv] = useState([]);
+  const [editEventId, setEditEventId] = useState(null);
 
   const formatDate = (selectedDate) => {
     const year = selectedDate.getFullYear();
@@ -35,8 +35,7 @@ const PatchEvent = () => {
         setEvents(response.data);
         setLoading(false);
       })
-      .catch((error) => {
-        console.error(error);
+      .catch(() => {
         setLoading(false);
       });
   }, [headers]);
@@ -45,7 +44,7 @@ const PatchEvent = () => {
     return <p>Loading...</p>;
   }
 
-  function changeStatus(e) {
+  function changeStatus(e, eventId) {
     e.preventDefault();
 
     axios
@@ -54,7 +53,7 @@ const PatchEvent = () => {
         setSingleEv(response.data);
       });
 
-    const setDate = date ? formatDate(new Date(date)) : singleEv.date;
+    const formattedDate = date ? formatDate(new Date(date)) : singleEv.date;
 
     axios
       .patch(
@@ -62,7 +61,7 @@ const PatchEvent = () => {
         {
           name,
           coins,
-          date: setDate,
+          date: formattedDate,
           location,
         },
         { headers }
@@ -72,7 +71,13 @@ const PatchEvent = () => {
         setEvents((prevEvents) =>
           prevEvents.map((event) =>
             event.id === eventId
-              ? { ...event, name, coins, date: formatDate(new Date(date)), location }
+              ? {
+                ...event, 
+                name: name ? name : event.name, 
+                coins: coins ? coins : event.coins, 
+                date: formattedDate ? formattedDate : event.date, 
+                location: location ? location : event.location
+              }
               : event
           )
         );
@@ -80,6 +85,9 @@ const PatchEvent = () => {
       })
       .catch(() => {
         alert('An error occurred. Please try again later.');
+      })
+      .finally(() => {
+        setEditEventId(null); 
       });
   }
 
@@ -98,22 +106,48 @@ const PatchEvent = () => {
     <div className={c.all_orders}>
       {events.length ? (
         events.map((event) => (
-          <form onSubmit={changeStatus} className={c.single_order} key={event.id}>
+          <form onSubmit={(e) => changeStatus(e, event.id)} className={c.single_order} key={event.id}>
             <div className={c.delete_btn} onClick={() => deleteEvent(event.id)}>
               <FiTrash2 />
             </div>
-            <p><b>Name:</b> {event.name}</p>
-            <p><b>Coins:</b> {event.coins} coins</p>
-            <p><b>Date:</b> {event.date} </p>
-            <p><b>Location:</b> {event.location} </p>
-            <i><b>You can change the properties here...</b></i>
-            <input type="text" placeholder="Event Name..." onChange={(e) => setName(e.target.value)} />
-            <input type="number" placeholder="Event Coins..." onChange={(e) => setCoins(e.target.value)} />
-            <input type="datetime-local" onChange={(e) => setDate(e.target.value)} />
-            <input type="text" placeholder="Event Location..." onChange={(e) => setLocation(e.target.value)} />
-            <button onClick={() => setEventId(event.id)}>
-              <FiCheck /> Done
-            </button>
+            <p>
+              <b className={c.bold}>Name:</b>{' '}
+              {editEventId === event.id ? (
+                <input type="text" placeholder="Event Name..." onChange={(e) => setName(e.target.value)} />
+              ) : (
+                event.name
+              )}
+            </p>
+            <p>
+              <b>Coins:</b>{' '} 
+              {editEventId === event.id ? (
+                <input type="number" placeholder="Event Coins..." onChange={(e) => setCoins(e.target.value)} />
+              ) : (
+                event.coins
+              )}
+            </p>
+            <p>
+              <b>Date:</b> {' '} 
+              {editEventId === event.id ? (
+                <input type="datetime-local" onChange={(e) => setDate(e.target.value)} />
+              ) : (
+                event.date
+              )}
+            </p>
+            <p>
+              <b>Location:</b> {' '} 
+              {editEventId === event.id ? (
+                <input type="text" placeholder="Event Location..." onChange={(e) => setLocation(e.target.value)} />
+              ) : (
+                event.location
+              )}
+            </p>
+            {editEventId === event.id ? (
+              <button className={c.okButton} type="submit">
+                <FiCheck />
+              </button>
+            ) : <></>}
+            <div className={c.edit_btn} onClick={() => setEditEventId(event.id)}><FiEdit3 /></div>
           </form>
         ))
       ) : (
