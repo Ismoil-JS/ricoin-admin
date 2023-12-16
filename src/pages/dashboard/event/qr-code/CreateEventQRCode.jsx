@@ -37,7 +37,7 @@ const CreateEventQRCode = () => {
       .get(`https://api.ricoin.uz/api/events/${eventId}`, 
       { headers })
       .then((response) => setQrId(response.data[0].id))
-      .catch(err => console.log(err))
+      .catch()
   }
 
   const downloadQRCodeAsJPGStart = () => {

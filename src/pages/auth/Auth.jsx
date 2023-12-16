@@ -27,7 +27,7 @@ const Auth = () => {
         }
       }
     )
-    .catch(err => console.log(err))
+    .catch()
   }
 
   return (

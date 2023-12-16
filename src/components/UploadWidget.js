@@ -13,7 +13,6 @@ const useCloudinaryUpload = (onSuccess) => {
       },
       function (error, result) {
         if (!error && result && result.event === 'success') {
-          console.log('Done! Here is the image info: ', result.info);
           const imageUrl = result.info.secure_url;
           onSuccess(imageUrl); 
         }

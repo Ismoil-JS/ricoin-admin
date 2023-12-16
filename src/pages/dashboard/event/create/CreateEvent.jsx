@@ -35,14 +35,12 @@ const CreateEvent = () => {
         headers,
       })
       .then((response) => {
-        console.log(response);
         if (response.status === 204) {
           alert("Event created");
           window.location.reload();
         }
       })
       .catch((err) => {
-        console.log(err);
         if (err.response && err.response.status === 401) {
           alert("You are not an admin");
         } else {

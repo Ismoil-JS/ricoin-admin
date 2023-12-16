@@ -19,7 +19,6 @@ const FinishedOrders = () => {
     axios
       .get('https://api.ricoin.uz/api/exchanges/finished', { headers })
       .then((response) => {
-        console.log(response.data);
         setOrders(response.data);
       })
       .catch(() => {

@@ -23,7 +23,6 @@ const PendingOrders = () => {
     axios
       .get('https://api.ricoin.uz/api/exchanges/pending', { headers })
       .then((response) => {
-        console.log(response.data);
         setOrders(response.data);
       })
       .catch((err) => {
@@ -46,7 +45,7 @@ const PendingOrders = () => {
           window.location.reload()
         }
       )
-    .catch(err => console.log(err))
+    .catch()
   }
 
   return <div className={c.all_orders}>
