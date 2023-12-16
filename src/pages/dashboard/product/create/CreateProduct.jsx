@@ -29,7 +29,7 @@ const CreateProduct = () => {
         headers, // Include headers in the request
       })
       .then((response) => {
-        if (response.status === 200) {
+        if (response.status === 204) {
           alert("Product created");
           window.location.reload();
         }

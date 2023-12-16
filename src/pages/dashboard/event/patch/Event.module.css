@@ -22,8 +22,10 @@
   z-index: 1;
 }
 .all_orders .single_order {
+  position: relative;
   width: 45%;
   min-width: 340px;
+  min-height: 465px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -59,6 +61,7 @@
   background-color: #09b231;
   font-size: 20px;
   font-weight: 700;
+  margin-top: 10px;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 }
@@ -68,6 +71,30 @@
   border: 1px solid #002E34;
 }
 .all_orders .single_order button:active {
+  background-color: #002E34;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+}
+.all_orders .single_order .delete_btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  height: 35px;
+  width: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: #ff0000;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+.all_orders .single_order .delete_btn:hover {
+  background-color: #ffffff;
+  color: #002E34;
+  border: 1px solid #002E34;
+}
+.all_orders .single_order .delete_btn:active {
   background-color: #002E34;
   color: #ffffff;
   border: 1px solid #ffffff;

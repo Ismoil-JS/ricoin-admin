@@ -1,8 +1,18 @@
-import React from 'react'
-import { NavLink, Outlet } from "react-router-dom"
+import React, { useEffect } from 'react'
+import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom"
 import c from "./Dashboard.module.scss"
 
 const Dashboard = () => {
+
+  const navigate = useNavigate();
+  const {pathname} = useLocation();
+
+  useEffect(() => {
+    if (pathname === "/dashboard") {
+      navigate("/dashboard/event")
+    }
+  }, [navigate, pathname]);
+
   return (
     <div>
         <h1>Dashboard</h1>
