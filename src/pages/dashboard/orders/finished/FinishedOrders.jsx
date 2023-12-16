@@ -31,6 +31,7 @@ const FinishedOrders = () => {
                 <p><b>Name:</b> {order.user_full_name}</p>
                 <p><b>Product:</b> {order.product_name}</p>
                 <p><b>Note:</b> {order.order_explanation ?? "No notes found"}</p>
+                <p><b>Quantity:</b> {order.order_amount ?? 1}</p>
               </div>;
     }) : <p>No orders</p> }
   </div>;
