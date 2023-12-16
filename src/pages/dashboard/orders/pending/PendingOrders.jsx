@@ -54,6 +54,7 @@ const PendingOrders = () => {
       return  <form onSubmit={changeStatus} className={c.single_order} key={order.order_id}>
                 <p><b>Name:</b> {order.user_full_name}</p>
                 <p><b>Product:</b> {order.product_name}</p>
+                <p><b>Quantity:</b> {order.order_amount ?? 1 }</p>
                 <input required type="text" placeholder='Any notes..(date)' onChange={(e) => setExplanation(e.target.value)}/>
                 <p className={c.order_status}><FiClock /> Pending...</p>
                 <button onClick={(e) => setOrderId(order.order_id)}><FiCheck /> Done</button>

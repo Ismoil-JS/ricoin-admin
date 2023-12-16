@@ -19,9 +19,10 @@ const FinishedOrders = () => {
     axios
       .get('https://api.ricoin.uz/api/exchanges/finished', { headers })
       .then((response) => {
+        console.log(response.data);
         setOrders(response.data);
       })
-      .catch((err) => {
+      .catch(() => {
       });
   }, [headers]);
 
@@ -30,7 +31,7 @@ const FinishedOrders = () => {
       return  <div className={c.single_order} key={order.order_id}>
                 <p><b>Name:</b> {order.user_full_name}</p>
                 <p><b>Product:</b> {order.product_name}</p>
-                <p><b>Note:</b> {order.explanation ?? "No notes found"}</p>
+                <p><b>Note:</b> {order.order_explanation ?? "No notes found"}</p>
               </div>;
     }) : <p>No orders</p> }
   </div>;
