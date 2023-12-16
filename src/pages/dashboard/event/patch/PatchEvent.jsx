@@ -111,9 +111,9 @@ const PatchEvent = () => {
               <FiTrash2 />
             </div>
             <p>
-              <b className={c.bold}>Name:</b>{' '}
+              <b>Name:</b>{' '}
               {editEventId === event.id ? (
-                <input type="text" placeholder="Event Name..." onChange={(e) => setName(e.target.value)} />
+                <input type="text" placeholder={event.name} onChange={(e) => setName(e.target.value)} />
               ) : (
                 event.name
               )}
@@ -121,7 +121,7 @@ const PatchEvent = () => {
             <p>
               <b>Coins:</b>{' '} 
               {editEventId === event.id ? (
-                <input type="number" placeholder="Event Coins..." onChange={(e) => setCoins(e.target.value)} />
+                <input type="number" placeholder={event.coins} onChange={(e) => setCoins(e.target.value)} />
               ) : (
                 event.coins
               )}
@@ -137,7 +137,7 @@ const PatchEvent = () => {
             <p>
               <b>Location:</b> {' '} 
               {editEventId === event.id ? (
-                <input type="text" placeholder="Event Location..." onChange={(e) => setLocation(e.target.value)} />
+                <input type="text" placeholder={event.location} onChange={(e) => setLocation(e.target.value)} />
               ) : (
                 event.location
               )}

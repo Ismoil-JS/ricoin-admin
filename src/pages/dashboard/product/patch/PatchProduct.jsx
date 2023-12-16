@@ -107,7 +107,7 @@ const PatchProduct = () => {
             <p>
               <b>Price:</b>{' '}
               {editProductId === product.id ? (
-                <input type="number" placeholder="Product Price..." value={price} onChange={(e) => setPrice(e.target.value)} />
+                <input type="number" placeholder={product.price} value={price} onChange={(e) => setPrice(e.target.value)} />
               ) : (
                 <span>{product.price + ' coins'}</span>
               )}
