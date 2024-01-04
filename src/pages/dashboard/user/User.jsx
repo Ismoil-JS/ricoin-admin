@@ -20,7 +20,7 @@ const User = () => {
       })
       .then((response) => 
       {
-        if(response.status === 201) {
+        if(response.status === 200) {
         alert("User is admin now!")
       }}
       )
@@ -41,7 +41,7 @@ const User = () => {
     <div>
       <form onSubmit={loginUser} className={c.login__form}>
         <input required type="email" placeholder="Email..." onChange={(e) => setUserEmail(e.target.value)} />
-        <button type="submit">Create</button>
+        <button type="submit">Make admin</button>
       </form>
     </div>
   );
