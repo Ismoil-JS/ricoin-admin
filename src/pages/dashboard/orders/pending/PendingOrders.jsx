@@ -1,27 +1,24 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import axios from 'axios';
-import { FiCheck, FiClock } from 'react-icons/fi';
-import c from "./Orders.module.scss"
-
+import React, { useEffect, useMemo, useState } from "react";
+import axios from "axios";
+import { FiCheck, FiClock } from "react-icons/fi";
+import c from "./Orders.module.scss";
 
 const PendingOrders = () => {
-  const [orders, setOrders] = useState([]); // [1]
-  const [orderId, setOrderId] = useState([]); // [1]
-  const [explanation, setExplanation] = useState(); // [1]
+  const [orders, setOrders] = useState([]);
+  const [orderId, setOrderId] = useState([]);
+  const [explanation, setExplanation] = useState();
 
-  // Retrieve the token from local storage
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
 
-  // Define the headers with the Authorization header containing the token using useMemo
   const headers = useMemo(() => {
     return {
-      'x-auth-token': token, // Correctly formatted Authorization header
+      "x-auth-token": token,
     };
   }, [token]);
 
   useEffect(() => {
     axios
-      .get('https://api.ricoin.uz/api/exchanges/pending', { headers })
+      .get("https://api.ricoin.uz/api/exchanges/pending", { headers })
       .then((response) => {
         setOrders(response.data);
       })
@@ -30,36 +27,77 @@ const PendingOrders = () => {
       });
   }, [headers]);
 
-
-  function changeStatus(e){
+  function changeStatus(e) {
     e.preventDefault();
     axios
-      .patch(`https://api.ricoin.uz/api/exchanges/${orderId}`, 
-      {
-        explanation
-      },
-      { headers })
-      .then(() => 
+      .patch(
+        `https://api.ricoin.uz/api/exchanges/${orderId}`,
         {
-          alert("Order status changed!")
-          window.location.reload()
-        }
+          explanation,
+        },
+        { headers }
       )
-    .catch()
+      .then(() => {
+        alert("Order status changed!");
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 
-  return <div className={c.all_orders}>
-    {orders.length ? orders.map((order) => {
-      return  <form onSubmit={changeStatus} className={c.single_order} key={order.order_id}>
-                <p><b>Name:</b> {order.user_full_name}</p>
-                <p><b>Product:</b> {order.product_name}</p>
-                <p><b>Quantity:</b> {order.order_amount ?? 1 }</p>
-                <input required type="text" placeholder='Any notes..(date)' onChange={(e) => setExplanation(e.target.value)}/>
-                <p className={c.order_status}><FiClock /> Pending...</p>
-                <button onClick={(e) => setOrderId(order.order_id)}><FiCheck /> Done</button>
-              </form>;
-    }) : <p>No orders</p>}
-  </div>;
-}
+  return (
+    <div className={c.all_orders}>
+      <table className={c.orders_table}>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Explanation</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {orders.length ? (
+            orders.map((order) => (
+              <tr key={order.order_id}>
+                <td>{order.user_full_name}</td>
+                <td>{order.product_name}</td>
+                <td>{order.order_amount ?? 1}</td>
+                <td>
+                  <input
+                    required
+                    type="text"
+                    placeholder="Any notes..(date)"
+                    onChange={(e) => setExplanation(e.target.value)}
+                  />
+                </td>
+                <td className={c.order_status}>
+                  <FiClock /> Pending...
+                </td>
+                <td>
+                  <button
+                    onClick={(e) => {
+                      setOrderId(order.order_id);
+                      changeStatus(e);
+                    }}
+                  >
+                    <FiCheck /> Done
+                  </button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="6">No orders</td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
+  );
+};
 
 export default PendingOrders;

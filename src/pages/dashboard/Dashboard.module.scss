@@ -1,37 +1,62 @@
-$main-color-dark: #002E34;
-
-h1{
-    width: 100%;
-    text-align: center;
-    margin: 0;
-    padding: 20px 0;
-    background-color: #0e44d8;
-
+$main-color-dark: #002e34;
+$primary-color: #0e44d8;
+$secondary-color: #9ee365;
+$text-color: #000;
+$highlight-color: #002e34;
+$hover-bg-color: lighten($secondary-color, 10%);
+.head {
+  flex: 1;
 }
 
+.auth__nav {
+  background-color: $secondary-color;
+  width: 100%;
+  padding: 15px 100px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 0;
+  list-style: none;
+  gap: 20px;
 
+  a {
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 500;
+    color: $text-color;
+    padding: 5px 10px;
+    transition: color 0.3s ease, border-bottom 0.3s ease;
 
-.auth__nav{
-    background-color: #0ae2cc;
-    width: 100%;
-    padding: 20px 0;
-    display: flex;
-    justify-content: space-evenly;
-    margin: 0;
+    &:hover {
+      color: $highlight-color;
+      border-bottom: 2px solid $highlight-color;
+    }
+  }
 
-    &:first-child{
-        list-style-type: none !important;
+  select {
+    font-size: 16px;
+    font-weight: 500;
+    padding: 5px 15px 5px 2px;
+    border-radius: 5px;
+    border: 1px solid $main-color-dark;
+    background-color: #fff;
+    color: $text-color;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+
+    &:hover {
+      background-color: $hover-bg-color;
     }
 
-    a{
-        text-decoration: none;
-        font-size: 18px;
-        font-weight: 500;
-        color: rgb(0, 0, 0);
+    &:focus {
+      outline: none;
+      border-color: $highlight-color;
     }
-  
-    .auth__link__active{
-      color: #002E34;
-      border-bottom: 2px solid $main-color-dark;
+
+    option {
+      background-color: #fff;
+      color: $text-color;
+      padding: 10px;
     }
+  }
 }

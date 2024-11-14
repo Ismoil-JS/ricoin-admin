@@ -1,119 +1,118 @@
-.all_orders{
-    width: 80%;
-    margin: 0 auto;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    padding: 20px 0;
-    border: 1px solid #002E34;
+.all_orders {
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  border: 1px solid #002e34;
+  border-radius: 5px;
+  box-shadow: 0 0 10px #002e34;
+  background-color: #ffffff;
+  color: #002e34;
+  font-family: "Roboto", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 500;
+  text-align: center;
+  letter-spacing: 1px;
+  line-height: 1.5;
+
+  .orders_table {
+    width: 100%;
+    border-collapse: collapse;
     border-radius: 5px;
-    box-shadow: 0 0 10px #002E34;
-    background-color: #ffffff;
-    color: #002E34;
-    font-family: 'Roboto', sans-serif;
-    font-size: 1.2rem;
-    font-weight: 500;
-    text-align: center;
-    letter-spacing: 1px;
-    line-height: 1.5;
-    z-index: 1;
+    overflow: hidden;
+    background-color: #fff;
 
-    .single_order {
-        width: 45%;
-        min-width: 340px;
-        display: flex; 
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: flex-start;
-        margin: 10px;
-        padding: 10px;
-        border: 1px solid #002E34;
-        border-radius: 5px;
+    th,
+    td {
+      padding: 12px;
+      text-align: center;
+      border: 1px solid #ddd;
+    }
 
-        p{
-            margin: 5px 0;
-        }
+    th {
+      background-color: #002e34;
+      color: #fff;
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
 
-        input{
-            width: 250px;
-            height: 30px;
-        }
-      
-        .order_status {
-          width: 140px;
-          height: 30px;
-          border-radius: 5px;
-          margin-bottom: 10px;
-          border: none;
-          background-color: #d0d703;
-          font-size: 20px;
-          font-weight: 700;
-        }
-      
-        button {
-          width: 110px;
-          height: 30px;
-          border-radius: 5px;
-          border: none;
-          background-color: #09b231;
-          font-size: 20px;
-          font-weight: 700;
-          cursor: pointer;
-          transition: all 0.3s ease-in-out;
-      
-          &:hover {
-            background-color: #ffffff;
-            color: #002E34;
-            border: 1px solid #002E34;
-          }
-      
-          &:active {
-            background-color: #002E34;
-            color: #ffffff;
-            border: 1px solid #ffffff;
-          }
-        }
+    td {
+      font-size: 1rem;
+      color: #002e34;
+    }
+
+    .order_status {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #d0d703;
+      font-weight: 700;
+    }
+
+    input {
+      width: 80%;
+      padding: 6px;
+      font-size: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      color: #002e34;
+      outline: none;
+    }
+
+    button {
+      width: 100px;
+      height: 35px;
+      border-radius: 5px;
+      border: none;
+      background-color: #09b231;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+
+      &:hover {
+        background-color: #ffffff;
+        color: #002e34;
+        border: 1px solid #002e34;
       }
-      
-}
 
-@media only screen and (max-width: 905px) {
-    .all_orders{
-        width: 95%;
+      &:active {
+        background-color: #002e34;
+        color: #ffffff;
+        border: 1px solid #ffffff;
+      }
     }
-}
+  }
 
-@media only screen and (max-width: 766px) {
-    .all_orders{
-        .single_order {
-            width: 95%;
-            min-width: 320px;
-            margin: 5px;
-            padding: 5px;
-        }
+  @media only screen and (max-width: 905px) {
+    .all_orders {
+      width: 95%;
     }
-}
+  }
 
-@media only screen and (max-width: 375px) {
-    .all_orders{
-        .single_order {
-            font-size: 16px;
-            min-width: 280px;
-
-            .order_status {
-                width: 120px;
-                height: 25px;
-                font-size: 16px;
-            }
-
-            button{
-                width: 90px;
-                height: 25px;
-                font-size: 16px;
-            }
-        }
+  @media only screen and (max-width: 766px) {
+    .orders_table {
+      font-size: 0.9rem;
     }
+  }
+
+  @media only screen and (max-width: 375px) {
+    .orders_table {
+      font-size: 0.8rem;
+    }
+
+    input {
+      width: 100%;
+    }
+
+    button {
+      width: 90px;
+      height: 30px;
+    }
+  }
 }
